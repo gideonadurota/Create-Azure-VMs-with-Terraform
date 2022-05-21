@@ -55,3 +55,13 @@ resource "azurerm_network_interface" "vmnic" {
     public_ip_address_id          = azurerm_public_ip.public-ip-address[count.index].id
   }
 }
+
+#Create public IP
+resource "azurerm_public_ip" "public-ip-address" {
+  count               = var.number-of-vms
+  name                = "pulic-ip-${count.index}"
+  resource_group_name = azurerm_resource_group.resourceGroup.name
+  location            = azurerm_resource_group.resourceGroup.location
+  allocation_method   = "Static"
+
+}
