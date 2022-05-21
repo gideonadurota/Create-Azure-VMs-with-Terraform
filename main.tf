@@ -116,3 +116,30 @@ resource "azurerm_network_interface_security_group_association" "NSG-NIC-Associa
   network_interface_id      = azurerm_network_interface.vmnic[count.index].id
   network_security_group_id = azurerm_network_security_group.nsg[count.index].id
 }
+
+#create VMs
+resource "azurerm_windows_virtual_machine" "virtual-machine" {
+   count               = var.number-of-vms 
+   name                = "AppDiscovery-vm-${count.index}"
+   resource_group_name = azurerm_resource_group.resourceGroup.name
+   location            = azurerm_resource_group.resourceGroup.location
+   size                = "Standard_B2ms"
+   network_interface_ids = [
+     azurerm_network_interface.vmnic.*.id[count.index],
+   ]
+    computer_name       = var.computer-name
+    admin_username      = var.admin-username
+    admin_password      = var.admin-password
+   
+  os_disk {
+    name              = "myosdisk-${count.index}"
+    caching           = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+  source_image_reference {
+     publisher = "MicrosoftWindowsServer"
+     offer     = "WindowsServer"
+     sku       = "2016-Datacenter"
+     version   = "latest"
+   }
+}
