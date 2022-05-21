@@ -162,3 +162,23 @@ resource "azurerm_storage_container" "container-for-script" {
     azurerm_storage_account.appdisc-storage
   ]
 }
+
+#Create VM extension to install the AWS App discovery agent
+resource "azurerm_virtual_machine_extension" "App-discovery-agent" {
+  count                = var.number-of-vms
+  name                 = var.computer-name
+  virtual_machine_id   = azurerm_windows_virtual_machine.virtual-machine[count.index].id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+  depends_on = [
+    azurerm_storage_container.container-for-script
+  ]
+
+  settings = <<SETTINGS
+    {
+        "fileUris": ["https://${var.storage-name}.blob.core.windows.net/${var.storage-container}/appdiscovery_agent_install.ps1"],
+        "commandToExecute": "powershell -ExecutionPolicy Unrestricted -file appdiscovery_agent_install.ps1"
+    }
+SETTINGS
+}
