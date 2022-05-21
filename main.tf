@@ -13,3 +13,9 @@ provider "azurerm" {
 
   subscription_id = var.sub-id
 }
+
+#Create resource group
+resource "azurerm_resource_group" "resourceGroup" {
+    name = var.resourceGroup
+    location = var.location
+}
