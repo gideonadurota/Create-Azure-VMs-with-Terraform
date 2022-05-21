@@ -152,3 +152,13 @@ resource "azurerm_storage_account" "appdisc-storage" {
     account_tier             = "Standard"
     account_replication_type = "LRS"
 }
+
+#Create storage account container
+resource "azurerm_storage_container" "container-for-script" {
+  name                  = var.storage-container
+  storage_account_name  = azurerm_storage_account.appdisc-storage.name
+  container_access_type = "private"
+  depends_on = [
+    azurerm_storage_account.appdisc-storage
+  ]
+}

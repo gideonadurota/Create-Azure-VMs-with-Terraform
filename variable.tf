@@ -56,3 +56,7 @@ variable "computer-name" {
 variable "storage-name" {
   default = "appdisc3254"
 }
+
+variable "storage-container" {
+  default = "script"
+}
