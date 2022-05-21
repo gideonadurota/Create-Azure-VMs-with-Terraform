@@ -109,3 +109,10 @@ resource "azurerm_network_security_group" "nsg" {
     destination_address_prefix = "*"
   }
 }
+
+#Create the association between NSG and NIC
+resource "azurerm_network_interface_security_group_association" "NSG-NIC-Association" {
+  count                = var.number-of-vms
+  network_interface_id      = azurerm_network_interface.vmnic[count.index].id
+  network_security_group_id = azurerm_network_security_group.nsg[count.index].id
+}
