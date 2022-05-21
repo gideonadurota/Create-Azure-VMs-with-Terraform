@@ -143,3 +143,12 @@ resource "azurerm_windows_virtual_machine" "virtual-machine" {
      version   = "latest"
    }
 }
+
+#Create storage account to keep the custom script file
+resource "azurerm_storage_account" "appdisc-storage" {
+    name                     = var.storage-name
+    resource_group_name      = azurerm_resource_group.resourceGroup.name
+    location                 = azurerm_resource_group.resourceGroup.location
+    account_tier             = "Standard"
+    account_replication_type = "LRS"
+}

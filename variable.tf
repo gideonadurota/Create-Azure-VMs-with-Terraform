@@ -40,3 +40,19 @@ variable "subnet-address-space" {
         "10.0.10.0/24"
     ]
 }
+
+variable "admin-username" {
+  type = string
+}
+
+variable "admin-password" {
+  type = string
+}
+
+variable "computer-name" {
+  default = "hostname"
+}
+
+variable "storage-name" {
+  default = "appdisc3254"
+}
