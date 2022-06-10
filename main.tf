@@ -145,7 +145,7 @@ resource "azurerm_windows_virtual_machine" "virtual-machine" {
 }
 
 #Create storage account to keep the custom script file
-resource "azurerm_storage_account" "appdisc-storage" {
+/*resource "azurerm_storage_account" "appdisc-storage" {
     name                     = var.storage-name
     resource_group_name      = azurerm_resource_group.resourceGroup.name
     location                 = azurerm_resource_group.resourceGroup.location
@@ -181,4 +181,4 @@ resource "azurerm_virtual_machine_extension" "App-discovery-agent" {
         "commandToExecute": "powershell -ExecutionPolicy Unrestricted -file appdiscovery_agent_install.ps1"
     }
 SETTINGS
-}
+}*/
